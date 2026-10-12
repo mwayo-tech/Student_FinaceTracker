@@ -1,3 +1,4 @@
+## M7 - Polish complete
 # Student Finance Tracker
 
 A fully accessible, responsive, vanilla HTML/CSS/JS finance tracker for students.
