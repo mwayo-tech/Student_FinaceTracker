@@ -1,3 +1,4 @@
+#M3: regex validation rules complete
 // scripts/validators.js
 // All regex validation rules for the Student Finance Tracker
 
