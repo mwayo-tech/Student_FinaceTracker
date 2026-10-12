@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Validator Tests — Finance Tracker</title>
+  <style>
+    body { font-family: system-ui, sans-serif; padding: 2rem; background: #f7f8fc; color: #1a1f2e; }
+    h1 { margin-bottom: 1.5rem; }
+    table { border-collapse: collapse; width: 100%; max-width: 900px; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.08); }
+    th { background: #2d6be4; color: #fff; padding: .6rem 1rem; text-align: left; font-size: .85rem; }
+    td { padding: .55rem 1rem; border-bottom: 1px solid #dde1ec; font-size: .875rem; }
+    .pass { color: #1a7a4a; font-weight: 700; }
+    .fail { color: #c0392b; font-weight: 700; }
+    #summary { margin-top: 1.25rem; font-weight: 700; font-size: 1.05rem; }
+  </style>
+</head>
+<body>
+  <h1>Validator Unit Tests</h1>
+  <table>
+    <thead>
+      <tr><th>#</th><th>Function</th><th>Input</th><th>Expected</th><th>Got</th><th>Result</th></tr>
+    </thead>
+    <tbody id="results"></tbody>
+  </table>
+  <p id="summary"></p>
+
+  <script type="module">
+    import {
+      validateDescription, validateAmount, validateDate,
+      validateCategory, compileRegex, PATTERNS
+    } from './scripts/validators.js';
+
+    const NULL = null; // shorthand for "no error expected"
+    const tests = [
+      // Description
+      ['validateDescription', 'Lunch at cafeteria',     NULL,                     validateDescription],
+      ['validateDescription', ' leading space',          'must not have leading',  validateDescription],
+      ['validateDescription', 'trailing space ',         'must not have leading',  validateDescription],
+      ['validateDescription', '',                        'required',               validateDescription],
+      ['validateDescription', 'dinner dinner special',   'repeated word',          validateDescription],
+      ['validateDescription', 'the the quick fox',       'repeated word',          validateDescription],
+      ['validateDescription', 'A'.repeat(121),           '120 characters',         validateDescription],
+
+      // Amount
+      ['validateAmount', '12.50',   NULL,          validateAmount],
+      ['validateAmount', '0',       'greater than',validateAmount],
+      ['validateAmount', '-5',      'positive',    validateAmount],
+      ['validateAmount', '12.999',  'decimal',     validateAmount],
+      ['validateAmount', 'abc',     'positive',    validateAmount],
+      ['validateAmount', '',        'required',    validateAmount],
+      ['validateAmount', '99999.99',NULL,          validateAmount],
+
+      // Date
+      ['validateDate', '2025-09-28', NULL,         validateDate],
+      ['validateDate', '2025-13-01', 'YYYY-MM-DD', validateDate],
+      ['validateDate', '28-09-2025', 'YYYY-MM-DD', validateDate],
+      ['validateDate', '',           'required',   validateDate],
+      ['validateDate', '2025-00-10', 'YYYY-MM-DD', validateDate],
+
+      // Category
+      ['validateCategory', 'Food',          NULL,      validateCategory],
+      ['validateCategory', 'Books',         NULL,      validateCategory],
+      ['validateCategory', 'Food-Drink',    NULL,      validateCategory],
+      ['validateCategory', 'Food 123',      'letters', validateCategory],
+      ['validateCategory', '',              'required',validateCategory],
+
+      // compileRegex
+      ['compileRegex (valid)',   '/\\d+/',     'RegExp',  v => compileRegex(v) instanceof RegExp ? NULL : 'not RegExp'],
+      ['compileRegex (invalid)', '[unclosed', 'null',    v => compileRegex(v) === null ? NULL : 'should be null'],
+
+      // ADVANCED: back-reference duplicate word
+      ['duplicateWord regex', 'the the',    'match',    v => PATTERNS.duplicateWord.test(v) ? NULL : 'no match'],
+      ['duplicateWord regex', 'hello world','no match', v => !PATTERNS.duplicateWord.test(v) ? NULL : 'unexpected match'],
+    ];
+
+    const tbody = document.getElementById('results');
+    let passed = 0;
+
+    tests.forEach(([name, input, expectContains, fn], i) => {
+      const result = fn(input);
+      let ok;
+      if (expectContains === NULL) {
+        ok = result === null;
+      } else {
+        ok = result !== null && String(result).toLowerCase().includes(expectContains.toLowerCase());
+      }
+      if (ok) passed++;
+
+      const row = tbody.insertRow();
+      row.innerHTML = `
+        <td>${i+1}</td>
+        <td>${name}</td>
+        <td><code>${String(input).slice(0,40)}</code></td>
+        <td>${expectContains === NULL ? '<em>no error</em>' : `contains "${expectContains}"`}</td>
+        <td><code>${result === null ? 'null' : String(result).slice(0,60)}</code></td>
+        <td class="${ok ? 'pass' : 'fail'}">${ok ? '✓ PASS' : '✗ FAIL'}</td>
+      `;
+    });
+
+    const s = document.getElementById('summary');
+    s.textContent = `${passed} / ${tests.length} tests passed.`;
+    s.style.color = passed === tests.length ? '#1a7a4a' : '#c0392b';
+  </script>
+</body>
+</html>

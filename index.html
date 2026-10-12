@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Student Finance Tracker — track your spending, budget, and categories.">
+  <title>Student Finance Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+
+  <!-- Global ARIA live region for announcements -->
+  <div id="live-announce" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <div class="app-layout">
+    <header role="banner">
+      <span class="app-title"> Finance <span>Tracker</span></span>
+      <nav role="navigation" aria-label="Main navigation">
+        <a href="#dashboard"  class="nav-link" data-section="dashboard"  aria-current="page">Dashboard</a>
+        <a href="#records"    class="nav-link" data-section="records">Records</a>
+        <a href="#add"        class="nav-link" data-section="add">Add</a>
+        <a href="#settings"   class="nav-link" data-section="settings">Settings</a>
+        <a href="#about"      class="nav-link" data-section="about">About</a>
+      </nav>
+    </header>
+
+    <main id="main-content" role="main">
+
+      <!-- Dashboard -->
+      <section id="section-dashboard" aria-labelledby="dash-heading">
+        <p>Loading…</p>
+      </section>
+
+      <!-- Records -->
+      <section id="section-records" aria-labelledby="rec-heading" hidden>
+        <p>Loading…</p>
+      </section>
+
+      <!-- Add -->
+      <section id="section-add" aria-labelledby="add-heading" hidden>
+        <p>Loading…</p>
+      </section>
+
+      <!-- Settings -->
+      <section id="section-settings" aria-labelledby="set-heading" hidden>
+        <p>Loading…</p>
+      </section>
+
+      <!-- About -->
+      <section id="section-about" aria-labelledby="about-heading" hidden>
+        <h2 id="about-heading">About</h2>
+        <div class="about-card">
+          <p>
+            <strong>Student Finance Tracker</strong> helps you record and understand
+            your day-to-day spending while at school. Track transactions, stay within
+            your monthly budget, and search your history using plain text or regex patterns.
+          </p>
+          <p>
+            Built with vanilla HTML, CSS, and JavaScript — no frameworks, no third-party
+            dependencies. All data is stored locally in your browser.
+          </p>
+          <p>
+            <strong>Features:</strong> regex-powered search, live validation, budget
+            progress, 7-day trend chart, JSON import/export, multi-currency settings,
+            and full keyboard accessibility.
+          </p>
+          <p>
+            <a href="https://github.com/mwayo-tech/Student_FinaceTracker" target="_blank" rel="noopener noreferrer">
+              GitHub Repository ↗
+            </a>
+            &nbsp;·&nbsp;
+            <a href="mailto:m.wayo@alustudent.com">m.wayo@alustudent.com</a>
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+    <footer role="contentinfo">
+      <p>Student Finance Tracker &copy; 2025 — data stays in your browser.</p>
+    </footer>
+  </div>
+
+  <script type="module">
+    // Inline seed loader — runs once if localStorage is empty
+    import { loadRecords, saveRecords } from './scripts/storage.js';
+    const existing = loadRecords();
+    if (existing.length === 0) {
+      fetch('./seed.json')
+        .then(r => r.json())
+        .then(data => { saveRecords(data); })
+        .catch(() => {});
+    }
+  </script>
+  <script type="module" src="scripts/main.js"></script>
+</body>
+</html>
