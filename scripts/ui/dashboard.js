@@ -1,4 +1,4 @@
-#M5: stats dashboard, budget cap, ARIA live
+//#M5: stats dashboard, budget cap, ARIA live
 // scripts/ui/dashboard.js
 import { getRecords, getSettings } from '../state.js';
 

@@ -1,4 +1,4 @@
-#M6: localStorage, import/export, settings
+//#M6: localStorage, import/export, settings
 // scripts/storage.js
 const RECORDS_KEY = 'sft:records';
 const SETTINGS_KEY = 'sft:settings';

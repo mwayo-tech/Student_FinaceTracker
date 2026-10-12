@@ -1,4 +1,4 @@
-#M4: table render, sort, regex search, highlight
+//#M4: table render, sort, regex search, highlight
 // scripts/ui/records.js
 import { getRecords, getSettings, deleteRecord, updateRecord } from '../state.js';
 import { compileRegex, highlight, validateRecord } from '../validators.js';
