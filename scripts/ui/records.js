@@ -71,7 +71,12 @@ function refreshTable(currency) {
   }
 
   let filtered = re
-    ? records.filter(r => re.test(r.description) || re.test(r.category))
+    ? records.filter(r =>
+        re.test(r.description) ||
+        re.test(r.category)    ||
+        re.test(String(parseFloat(r.amount).toFixed(2))) ||
+        re.test(r.date)
+      )
     : [...records];
 
   filtered.sort((a, b) => {
