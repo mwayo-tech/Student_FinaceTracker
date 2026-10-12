@@ -2,7 +2,7 @@
 
 A fully accessible, responsive, vanilla HTML/CSS/JS finance tracker for students.
 
-**Live demo:** https://yourusername.github.io/finance-tracker
+**Live demo:**  https://mwayo-tech.github.io/Student_FinaceTracker/
 
 ---
 
