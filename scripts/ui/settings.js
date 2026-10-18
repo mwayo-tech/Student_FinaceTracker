@@ -1,4 +1,5 @@
 // scripts/ui/settings.js
+//This file is the main room for the settings page.It congtains tools to change most part of the application.
 import { getSettings, updateSettings } from '../state.js';
 
 export function renderSettings() {
@@ -69,6 +70,7 @@ export function renderSettings() {
         GHS: 1,
         USD: parseFloat(fd.get('rateUSD')) || 0.067,
         EUR: parseFloat(fd.get('rateEUR')) || 0.061,
+        RWf: parseFloat(fd.get('rateRWF')) || 135.000,
       },
     });
     const msg = document.getElementById('settings-msg');

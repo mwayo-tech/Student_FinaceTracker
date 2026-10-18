@@ -56,7 +56,7 @@ export function renderForm() {
 
   const form = document.getElementById('add-form');
 
-  // Live validation on blur
+  // Real time validation on blur
   form.querySelector('#f-description').addEventListener('blur', e => {
     showError('description', validateDescription(e.target.value));
   });

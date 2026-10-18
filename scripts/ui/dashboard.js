@@ -1,4 +1,4 @@
-//#M5: stats dashboard, budget cap, ARIA live
+//M5: stats dashboard, budget cap, ARIA live
 // scripts/ui/dashboard.js
 import { getRecords, getSettings } from '../state.js';
 
@@ -14,12 +14,12 @@ export function renderDashboard() {
   const remaining  = budget - total;
   const exceeded   = remaining < 0;
 
-  // Top category
+  // Top_Category
   const catMap = {};
   thisMonth.forEach(r => { catMap[r.category] = (catMap[r.category] || 0) + parseFloat(r.amount); });
   const topCat = Object.entries(catMap).sort((a,b) => b[1]-a[1])[0];
 
-  // Last 7 days
+  // Within the last 7 days
   const days = [];
   for (let i = 6; i >= 0; i--) {
     const d = new Date(now);

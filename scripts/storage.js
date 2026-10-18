@@ -32,11 +32,11 @@ export function defaultSettings() {
     currency: 'GHS',
     monthlyBudget: 500,
     categories: ['Food', 'Books', 'Transport', 'Entertainment', 'Fees', 'Other'],
-    rates: { USD: 0.067, EUR: 0.061, GHS: 1 },
+    rates: { USD: 0.067, EUR: 0.061, GHS: 1, RWF: 135.000 },
   };
 }
 
-// JSON export
+// JSON_Export 
 export function exportJSON(records) {
   const blob = new Blob([JSON.stringify(records, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
@@ -47,7 +47,7 @@ export function exportJSON(records) {
   URL.revokeObjectURL(url);
 }
 
-// JSON import with validation
+// JSON Import and Validations
 export function importJSON(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
